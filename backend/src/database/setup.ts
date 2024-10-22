@@ -2,17 +2,21 @@
  * This file handles the main setup for the database layer.
  */
 
-import { Sequelize } from 'sequelize';
+import { Sequelize, Model } from 'sequelize';
 
 import defineUser from './models/user';
 import defineStock from './models/stock';
 import defineStockPrice from './models/stockPrice';
-import defineWatchList from './models/watchlist';
+import defineWatchList from './models/watchList';
+import generateStocks from './generators/generateStocks';
 
+/**
+ * This is the main database setup function. It should be called before the express app starts.
+ */
 export default async function setupDatabase() {
     const sequelize = new Sequelize({
-        dialect: 'sqlite',
-        storage: './database.sqlite',
+        dialect: 'sqlite' as 'sqlite',
+        storage: './database.sqlite'
     });
 
     // LOAD DEFINED MODELS
@@ -33,7 +37,11 @@ export default async function setupDatabase() {
     Stock.hasMany(StockPrice, { foreignKey: 'stockId' });
     StockPrice.belongsTo(Stock, { foreignKey: 'stockId' });
 
+    // Force all tables to be created - not for use in prod environments
     await sequelize.sync({ force: true });
+
+    // Generate Random Stocks
+    await generateStocks(Stock);
 
     return {
         User,
@@ -41,4 +49,11 @@ export default async function setupDatabase() {
         StockPrice,
         WatchList
     };
+}
+
+export interface Models {
+    User: typeof Model;
+    Stock: typeof Model;
+    StockPrice: typeof Model;
+    WatchList: typeof Model;
 }

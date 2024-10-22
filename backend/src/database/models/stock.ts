@@ -17,8 +17,7 @@ export default function defineStock(sequelize: Sequelize) {
             },
             ticker: {
                 type: DataTypes.STRING,
-                allowNull: false,
-                unique: true,
+                allowNull: false
             },
             name: {
                 type: DataTypes.STRING,

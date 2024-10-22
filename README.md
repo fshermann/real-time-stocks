@@ -1,6 +1,8 @@
 # real-time-stocks
 Welcome to the "real-time-stocks" app. I tried to keep the design and code as simple as possible while still being modular enough to allow for new features to be added. The app itself can be ran entirely locally using docker compose. Alternatively, you can run the frontend and backend without docker if you would like. Directions for both approaches are included below.
 
+The data comes courtesy of a package called [faker](https://www.npmjs.com/package/@faker-js/faker). Faker generates data that is convincingly real as opposed to obvious placeholder data.
+
 # Getting Started
 1. Clone the repository.
 2. Install and setup docker.

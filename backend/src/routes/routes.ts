@@ -5,13 +5,15 @@
 
 import { Router } from 'express';
 
+import { Models } from '../database/setup';
+
 import setupHealthChecks from './health/get';
 
 /**
  * The main caller for all route setups.
  * @param router - a reference to the Express router object
  */
-export default function setupRoutes(router: Router, models: Object) {
+export default function setupRoutes(router: Router, models: Models) {
     // HEALTH CHECKS
     setupHealthChecks(router);
 }
