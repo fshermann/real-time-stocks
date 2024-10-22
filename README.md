@@ -1,4 +1,10 @@
 # real-time-stocks
+Welcome to the "real-time-stocks" app. I tried to keep the design and code as simple as possible while still being modular enough to allow for new features to be added. The app itself can be ran entirely locally using docker compose. Alternatively, you can run the frontend and backend without docker if you would like. Directions for both approaches are included below.
+
+# Getting Started
+1. Clone the repository.
+2. Install and setup docker.
+3. `docker-compose up`
 
 # Backend/
 Language: Typescript
@@ -28,7 +34,13 @@ Stocks
 User Management
 - [POST `/api/v1/users`]() - sign up a new user
 - [POST `/api/v1/users/login`]() - sign up a new user
-- [POST `/api/v1/users/:userId/watchlist`]() - add a stock to the user's watch list
+  - ```
+    {
+        "username": "string",
+        "hashedPassword": "string"
+    }
+    ```
+- [POST `/api/v1/users/:userId/watchlist/:stockId`]() - add a stock to the user's watch list
 - [GET `/api/v1/users/:userId/watchlist`]() - get a paginated list of all stocks on the user's watch list
 - [DELETE `/api/v1/users/:userId/watchlist/:stockId`]() - remove a stock from a user's list
 

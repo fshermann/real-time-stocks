@@ -1,26 +1,26 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 
-export default function defineUser(sequelize: Sequelize) {
-    class User extends Model {
+export default function defineStock(sequelize: Sequelize) {
+    class Stock extends Model {
         public id!: number;
-        public username!: string;
-        public hashedPassword!: string;
+        public ticker!: string;
+        public name!: string;
     }
 
-    User.init(
+    Stock.init(
         {
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
             },
-            username: {
+            ticker: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },
-            hashedPassword: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -30,5 +30,5 @@ export default function defineUser(sequelize: Sequelize) {
         }
     );
 
-    return User;
+    return Stock;
 }

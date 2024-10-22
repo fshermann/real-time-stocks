@@ -1,26 +1,26 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 
-export default function defineUser(sequelize: Sequelize) {
-    class User extends Model {
+export default function defineWatchList(sequelize: Sequelize) {
+    class WatchList extends Model {
         public id!: number;
-        public username!: string;
-        public hashedPassword!: string;
+        public name!: string;
+        public email!: string;
     }
 
-    User.init(
+    WatchList.init(
         {
             id: {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
             },
-            username: {
+            userId: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },
-            hashedPassword: {
+            stockId: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -30,5 +30,5 @@ export default function defineUser(sequelize: Sequelize) {
         }
     );
 
-    return User;
+    return WatchList;
 }
