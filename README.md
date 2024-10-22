@@ -16,9 +16,21 @@ Frameworks:
 ## To start with Docker
 TBD
 
-## API Docs
+## REST API Routes
+Health Check
 - [GET `/api/v1/health`](backend/src/routes/health/get.ts) - a basic health check route
-- [GET `/api/v1/stock/:id`](backend/src/routes/health/get.ts) - get a stock
+
+Stocks
+- [GET `/api/v1/stocks`]() - get a paginated list of all stocks
+- [GET `/api/v1/stocks/:id`]() - get a single stock's details
+- [GET `/api/v1/stocks/:id/price`]() - get a paginated list of a single stock's price history
+
+User Management
+- [POST `/api/v1/users`]() - sign up a new user
+- [POST `/api/v1/users/login`]() - sign up a new user
+- [POST `/api/v1/users/:userId/watchlist`]() - add a stock to the user's watch list
+- [GET `/api/v1/users/:userId/watchlist`]() - get a paginated list of all stocks on the user's watch list
+- [DELETE `/api/v1/users/:userId/watchlist/:stockId`]() - remove a stock from a user's list
 
 ## [Database](backend/src/database/)
 The ERD is below.
