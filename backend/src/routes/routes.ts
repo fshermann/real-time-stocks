@@ -11,7 +11,7 @@ import setupHealthChecks from './health/get';
  * The main caller for all route setups.
  * @param router - a reference to the Express router object
  */
-export default function setupRoutes(router: Router) {
+export default function setupRoutes(router: Router, models: Object) {
     // HEALTH CHECKS
     setupHealthChecks(router);
 }

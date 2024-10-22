@@ -6,6 +6,7 @@ import express from 'express';
 import cors from 'cors';
 
 import setupRoutes from './routes/routes';
+import setupDatabase from './database/setup';
 
 const app = express();
 const APP_PORT = process.env.APP_PORT;
@@ -23,9 +24,17 @@ if (!APP_PORT) {
 }
 
 // START THE SERVER
-app.listen(APP_PORT, () => {
+app.listen(APP_PORT, async () => {
     console.log(`Server is running at http://localhost:${APP_PORT}`);
 
-    setupRoutes(router);
+    // database setup
+    const models = await setupDatabase();
+    models.User.create({
+        username: 'test',
+        hashedPassword: '123'
+    })
+
+    // route setup with base route included
+    setupRoutes(router, models);
     app.use('/api/v1', router);
 });
