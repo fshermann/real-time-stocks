@@ -29,7 +29,7 @@ Health Check
 - [GET `/api/v1/health`](backend/src/routes/health/get.ts) - a basic health check route
 
 Stocks
-- [GET `/api/v1/stocks`]() - get a paginated list of all stocks
+- [GET `/api/v1/stocks&page=<num>&size=<num>`]() - get a paginated list of all stocks
 - [GET `/api/v1/stocks/:id`]() - get a single stock's details
 - [GET `/api/v1/stocks/:id/price`]() - get a paginated list of a single stock's price history
 
@@ -66,3 +66,5 @@ The ERD is below.
 
 # Docs/
 - [models.erd](docs/models.erc) - An ERD diagram as JSON. Viewable with the VS Code extension [here](https://marketplace.visualstudio.com/items?itemName=dineug.vuerd-vscode).
+
+# Things I Would do Differently

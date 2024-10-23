@@ -11,6 +11,10 @@ import { Models } from '../database/setup';
 import healthCheck from '../controllers/health/get';
 import handleLogin from '../controllers/users/login/login';
 import handleSignUp from '../controllers/users/signUp';
+import getAllStocks from '../controllers/stocks/getAllStocks';
+import getStockById from '../controllers/stocks/getStockById';
+import getStockPrices from '../controllers/stocks/getStockPrices';
+import paginate from '../util/paginate';
 
 /**
  * The main caller for all route setups.
@@ -48,5 +52,34 @@ export default function setupRoutes(router: Router, models: Models) {
         } else {
             res.send(signUpResponse);
         }
+    })
+
+    // ============== STOCKS ==============
+    router.get('/stocks', async (req: Request, res: Response) => {
+        const { limit, offset } = paginate(req);
+        const stocks = await getAllStocks(limit, offset, models.Stock);
+        res.send(stocks);
+    })
+
+    router.get('/stocks/:id', async (req: Request, res: Response) => {
+        const stockId = parseInt(req.params.id);
+        if (!stockId) {
+            res.sendStatus(400);
+        }
+
+        const stock = await getStockById(stockId, models.Stock);
+        res.send(stock);
+    })
+
+    router.get('/stocks/:id/price', async (req: Request, res: Response) => {
+        const { limit, offset } = paginate(req);
+
+        const stockId = parseInt(req.params.id);
+        if (!stockId) {
+            res.sendStatus(400);
+        }
+
+        const stockPrices = await getStockPrices(stockId, limit, offset, models.StockPrice);
+        res.send(stockPrices);
     })
 }
