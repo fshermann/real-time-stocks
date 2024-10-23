@@ -7,7 +7,7 @@
  * @param price - the price to mutate within the bounds of the algorithm
  */
 const stablePriceFluctuation = (price: number) => {
-    const volatility = 0.02; // 2% price volatility
+    const volatility = 0.5; // this is a pretty low amount of volatility
 
     let randomness: number = Math.random();  // Random float between 0 and 1
     let changePercent: number = 2 * volatility * randomness;
@@ -41,19 +41,12 @@ export default async function generateStockPrices(Stock: any, StockPrice: any) {
         const max: number = 300;
         let startingPrice: number = +(Math.random() * (max - min) + min).toFixed(2);
 
-        // get the market opening time
-        let now: Date = new Date();
-        let marketOpening: Date = new Date(now);
-        marketOpening.setHours(9, 0, 0, 0); // Set time to 9:00:00.000 AM
-
         let price = startingPrice;
         for (let i = 0; i < maxRecords; i++) {
             price = stablePriceFluctuation(price);
             stockPrices.push({
                 stockId: stock.id,
-                price: price,
-                createdAt: marketOpening,
-                updatedAt: marketOpening
+                price: price
             });
         }
     })
