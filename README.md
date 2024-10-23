@@ -25,15 +25,15 @@ Frameworks:
 TBD
 
 ## REST API Routes
-Health Check
+### Health Check
 - [GET `/api/v1/health`](backend/src/routes/health/get.ts) - a basic health check route
 
-Stocks
+### Stocks
 - [GET `/api/v1/stocks&page=<num>&size=<num>`]() - get a paginated list of all stocks
 - [GET `/api/v1/stocks/:id`]() - get a single stock's details
 - [GET `/api/v1/stocks/:id/price`]() - get a paginated list of a single stock's price history
 
-User Management
+### User Management
 - [POST `/api/v1/users`]() - sign up a new user
   - ```
     {
@@ -48,6 +48,9 @@ User Management
         "hashedPassword": "string"
     }
     ```
+
+### User Watchlist (Protected with JWT)
+All requests must include a valid user JWT using an `authorization` header
 - [POST `/api/v1/users/:userId/watchlist/:stockId`]() - add a stock to the user's watch list
 - [GET `/api/v1/users/:userId/watchlist`]() - get a paginated list of all stocks on the user's watch list
 - [DELETE `/api/v1/users/:userId/watchlist/:stockId`]() - remove a stock from a user's list
@@ -70,3 +73,5 @@ The ERD is below.
 # Things I Would do Differently
 - Real timestamps in the randomly generated data. This would require a pretty invovled algorithm to back date the records and make it look like a real stock price changing every minute or so.
 - Fix the Sequelize model types. I had never used Sequelize with typescript and getting Typescript to understand the initialized sequelize model types was taking a little too long so I went with `any` types for those.
+- Testing. SInce most of this was database ops, unit tests would require mocking. I would like to add those to help improve the overall robustness of the app.
+- 

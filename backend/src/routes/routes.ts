@@ -9,12 +9,14 @@ import { Router, Request, Response } from 'express';
 
 import { Models } from '../database/setup';
 import healthCheck from '../controllers/health/get';
-import handleLogin from '../controllers/users/login/login';
+import handleLogin from '../controllers/users/login';
 import handleSignUp from '../controllers/users/signUp';
 import getAllStocks from '../controllers/stocks/getAllStocks';
 import getStockById from '../controllers/stocks/getStockById';
 import getStockPrices from '../controllers/stocks/getStockPrices';
 import paginate from '../util/paginate';
+import verifyToken from '../middleware/auth';
+import addToWatchList from '../controllers/users/addToWatchList';
 
 /**
  * The main caller for all route setups.
@@ -28,7 +30,7 @@ export default function setupRoutes(router: Router, models: Models) {
         res.send(healthCheckResponse);
     })
 
-    // ============== USER MANAGEMENT ==============
+    // ============== USER LIFECYCLE MANAGEMENT ==============
     router.post('/users/login', async (req: Request, res: Response) => {
         const username = req.body.username;
         const hashedPassword = req.body.hashedPassword;
@@ -81,5 +83,26 @@ export default function setupRoutes(router: Router, models: Models) {
 
         const stockPrices = await getStockPrices(stockId, limit, offset, models.StockPrice);
         res.send(stockPrices);
+    })
+
+    // ============== USER WATCH LIST ==============
+    router.post('/users/:userId/watchlist/:stockId', verifyToken, async (req: Request, res: Response) => {
+        const userId = parseInt(req.params.userId);
+        const stockId = parseInt(req.params.stockId);
+
+        const status = await addToWatchList(userId, stockId, models.WatchList);
+        if (status) {
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(400);
+        }
+    })
+
+    router.get('/users/:userId/watchlist', verifyToken, async (req: Request, res: Response) => {
+
+    })
+
+    router.delete('/users/:userId/watchlist/:stockId', verifyToken, async (req: Request, res: Response) => {
+
     })
 }
