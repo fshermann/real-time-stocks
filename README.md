@@ -52,7 +52,7 @@ TBD
 ### User Watchlist (Protected with JWT)
 All requests must include a valid user JWT using an `authorization` header
 - [POST `/api/v1/users/:userId/watchlist/:stockId`]() - add a stock to the user's watch list
-- [GET `/api/v1/users/:userId/watchlist`]() - get a paginated list of all stocks on the user's watch list
+- [GET `/api/v1/users/:userId/watchlist&page=<num>&size=<num>`]() - get a paginated list of all stocks on the user's watch list
 - [DELETE `/api/v1/users/:userId/watchlist/:stockId`]() - remove a stock from a user's list
 
 ## [Database](backend/src/database/)
@@ -70,8 +70,9 @@ The ERD is below.
 # Docs/
 - [models.erd](docs/models.erc) - An ERD diagram as JSON. Viewable with the VS Code extension [here](https://marketplace.visualstudio.com/items?itemName=dineug.vuerd-vscode).
 
-# Things I Would do Differently
+# Things I Would do if I Had More Time
 - Real timestamps in the randomly generated data. This would require a pretty invovled algorithm to back date the records and make it look like a real stock price changing every minute or so.
 - Fix the Sequelize model types. I had never used Sequelize with typescript and getting Typescript to understand the initialized sequelize model types was taking a little too long so I went with `any` types for those.
 - Testing. SInce most of this was database ops, unit tests would require mocking. I would like to add those to help improve the overall robustness of the app.
-- 
+- Adding a linter/formatter would be important as well.
+- Document API with OpenAPI spec.

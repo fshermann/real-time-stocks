@@ -18,6 +18,7 @@ import paginate from '../util/paginate';
 import verifyToken from '../middleware/auth';
 import addToWatchList from '../controllers/users/addToWatchList';
 import removeFromWatchList from '../controllers/users/removeFromWatchList';
+import getWatchList from '../controllers/users/getWatchList';
 
 /**
  * The main caller for all route setups.
@@ -112,7 +113,16 @@ export default function setupRoutes(router: Router, models: Models) {
     })
 
     router.get('/users/:userId/watchlist', verifyToken, async (req: Request, res: Response) => {
+        const { limit, offset } = paginate(req);
+        const userId = parseInt(req.params.userId);
 
+        const watchList = await getWatchList(userId, limit, offset, models.WatchList);
+
+        if (watchList) {
+            res.send(watchList);
+        } else {
+            res.sendStatus(400);
+        }
     })
 
 }
