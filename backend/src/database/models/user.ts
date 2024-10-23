@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-
+/**
+ * This function creates the User database model.
+ */
 export default function defineUser(sequelize: Sequelize) {
     class User extends Model {
         public id!: number;

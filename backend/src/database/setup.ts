@@ -9,6 +9,7 @@ import defineStock from './models/stock';
 import defineStockPrice from './models/stockPrice';
 import defineWatchList from './models/watchList';
 import generateStocks from './generators/generateStocks';
+import generateStockPrices from './generators/generateStockPrices';
 
 /**
  * This is the main database setup function. It should be called before the express app starts.
@@ -42,6 +43,15 @@ export default async function setupDatabase() {
 
     // Generate Random Stocks
     await generateStocks(Stock);
+    await generateStockPrices(Stock, StockPrice)
+
+    // Add an admin user
+    await User.create({
+        username: 'test',
+        hashedPassword: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08' // sha256 of test
+    });
+
+    console.log("DATABASE SETUP COMPLETE! APP IS LIVE!");
 
     return {
         User,

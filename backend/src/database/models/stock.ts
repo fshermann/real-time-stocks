@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-
+/**
+ * This function creates the Stock database model.
+ */
 export default function defineStock(sequelize: Sequelize) {
     class Stock extends Model {
         public id!: number;

@@ -28,7 +28,7 @@ export default async function generateStocks(Stock: any) {
 
     try {
         await Stock.bulkCreate(stocks, { logging: false });
-        console.log(`Stock table populated with ${maxRecords} fake records.`);
+        console.log(`Stocks table populated with ${maxRecords} fake records.`);
     } catch (error) {
         console.error('Error populating Stock table:', error);
     }

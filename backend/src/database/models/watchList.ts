@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-
+/**
+ * This function creates the WatchList database model.
+ */
 export default function defineWatchList(sequelize: Sequelize) {
     class WatchList extends Model {
         public id!: number;

@@ -8,6 +8,9 @@ import cors from 'cors';
 import setupRoutes from './routes/routes';
 import setupDatabase from './database/setup';
 
+/**
+ * This function starts the server and calls all other initial setup functions.
+ */
 async function start() {
     const app = express();
     const APP_PORT = process.env.APP_PORT;
@@ -26,10 +29,6 @@ async function start() {
 
     // SETUP THE DATABASE
     const models = await setupDatabase();
-    models.User.create({
-        username: 'test',
-        hashedPassword: '123'
-    })
 
     // START THE SERVER
     app.listen(APP_PORT, () => {
