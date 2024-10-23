@@ -17,6 +17,7 @@ import getStockPrices from '../controllers/stocks/getStockPrices';
 import paginate from '../util/paginate';
 import verifyToken from '../middleware/auth';
 import addToWatchList from '../controllers/users/addToWatchList';
+import removeFromWatchList from '../controllers/users/removeFromWatchList';
 
 /**
  * The main caller for all route setups.
@@ -98,11 +99,20 @@ export default function setupRoutes(router: Router, models: Models) {
         }
     })
 
+    router.delete('/users/:userId/watchlist/:stockId', verifyToken, async (req: Request, res: Response) => {
+        const userId = parseInt(req.params.userId);
+        const stockId = parseInt(req.params.stockId);
+
+        const status = await removeFromWatchList(userId, stockId, models.WatchList);
+        if (status) {
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(400);
+        }
+    })
+
     router.get('/users/:userId/watchlist', verifyToken, async (req: Request, res: Response) => {
 
     })
 
-    router.delete('/users/:userId/watchlist/:stockId', verifyToken, async (req: Request, res: Response) => {
-
-    })
 }
