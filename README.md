@@ -35,6 +35,12 @@ Stocks
 
 User Management
 - [POST `/api/v1/users`]() - sign up a new user
+  - ```
+    {
+        "username": "string",
+        "hashedPassword": "string"
+    }
+    ```
 - [POST `/api/v1/users/login`]() - sign up a new user
   - ```
     {
