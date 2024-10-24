@@ -18,7 +18,8 @@ const hashPassword = (password) => {
 export default function AuthCard(props) {
     const {
         token,
-        setToken
+        setToken,
+        setUserId
     } = props;
 
     const [isLogin, setIsLogin] = useState(true);
@@ -37,14 +38,16 @@ export default function AuthCard(props) {
 
             if (isLogin) {
                 login(username, hashPassword(password)).then(res => {
-                    setToken(res);
+                    setToken(res.token);
+                    setUserId(res.userId);
                 }).catch(() => {
                     setErrorMessage('Login failed. Invalid username or password.');
                 });
             } else {
                 if (username && password.length >= 4) {
                     signUp(username, hashPassword(password)).then(res => {
-                        setToken(res);
+                        setToken(res.token);
+                        setUserId(res.userId);
                     });
                 } else {
                     setErrorMessage('Sign-up failed. Ensure a valid username and a password with at least 4 characters.');
@@ -56,7 +59,14 @@ export default function AuthCard(props) {
     };
 
     return (
-        <Card sx={{ maxWidth: 400, mx: 'auto', mt: 5 }}>
+        <Card
+            elevation={4}
+            sx={{
+                maxWidth: 400,
+                mx: 'auto',
+                p: 3
+            }}
+        >
             {
                 token ?
                     <Typography>
