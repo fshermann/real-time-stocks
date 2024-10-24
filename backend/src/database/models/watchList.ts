@@ -19,8 +19,7 @@ export default function defineWatchList(sequelize: Sequelize) {
             },
             userId: {
                 type: DataTypes.STRING,
-                allowNull: false,
-                unique: true,
+                allowNull: false
             },
             stockId: {
                 type: DataTypes.STRING,

@@ -48,7 +48,7 @@ export async function getStockPriceById(stockId, page, recordsPerPage) {
 }
 
 export async function addToWatchList(userId, stockId, token) {
-    const res = await axios.post(root + `/api/v1/users/${userId}/watchlist/${stockId}`, {
+    const res = await axios.post(root + `/api/v1/users/${userId}/watchlist/${stockId}`, {}, {
         headers: {
             Authorization: `Bearer ${token}`
         }

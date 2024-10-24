@@ -6,15 +6,20 @@ import {
     TableRow,
     Pagination,
     Card,
-    Typography
+    Typography,
+    Button
 } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { getStocks } from '../utils/apiCalls';
+import { addToWatchList, getStocks } from '../utils/apiCalls';
 
 export default function StocksTable(props) {
     const {
-        setPickedStock
+        setPickedStock,
+        userId,
+        token,
+        forceWatchListUpdate,
+        setForceWatchListUpdate
     } = props;
 
     const [stocks, setStocks] = useState([]);
@@ -34,6 +39,14 @@ export default function StocksTable(props) {
     const handlePageChange = (event, value) => {
         setPage(value);
     };
+
+    const handleAddingToWatchList = (stockId) => {
+        addToWatchList(userId, stockId, token).then(() => {
+            setForceWatchListUpdate(!forceWatchListUpdate);
+        }).catch(() => {
+            alert('Stock is already on watch list!')
+        });
+    }
 
     return (
         <Card
@@ -68,6 +81,16 @@ export default function StocksTable(props) {
                         >
                             <TableCell>{item.name}</TableCell>
                             <TableCell>{item.ticker}</TableCell>
+                            {
+                                userId ?
+                                    <TableCell>
+                                        <Button
+                                            onClick={() => handleAddingToWatchList(item.id)}
+                                        >
+                                            Add To Watch List
+                                        </Button>
+                                    </TableCell> : null
+                            }
                         </TableRow>
                     ))}
                 </TableBody>

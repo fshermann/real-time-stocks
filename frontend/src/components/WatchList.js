@@ -16,7 +16,8 @@ export default function WatchList(props) {
     const {
         token,
         userId,
-        setPickedStock
+        setPickedStock,
+        forceWatchListUpdate
     } = props;
 
     const [watchList, setWatchList] = useState([]);
@@ -31,7 +32,7 @@ export default function WatchList(props) {
             setPage(res.currentPage);
             setTotalPages(res.totalPages);
         });
-    }, []);
+    }, [page, token, userId]);
 
     const handlePageChange = (event, value) => {
         setPage(value);
@@ -44,7 +45,7 @@ export default function WatchList(props) {
 
     useEffect(() => {
         getData();
-    }, [getData, userId, token, page]);
+    }, [getData, userId, token, page, forceWatchListUpdate]);
 
     return (
         <Card

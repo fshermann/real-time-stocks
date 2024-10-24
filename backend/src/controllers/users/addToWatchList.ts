@@ -10,7 +10,8 @@ export default async function addToWatchList(userId: number, stockId: number, Wa
         if (!record || !isCreated) {
             return false;
         }
-    } catch {
+    } catch (e) {
+
         return false;
     }
 

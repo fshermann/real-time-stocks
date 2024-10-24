@@ -12,6 +12,7 @@ export default function App() {
     const [pickedStock, setPickedStock] = useState(1);
     const [token, setToken] = useState(false);
     const [userId, setUserId] = useState(false);
+    const [forceWatchListUpdate, setForceWatchListUpdate] = useState(false);
 
     return (
         <Grid2
@@ -26,6 +27,10 @@ export default function App() {
             >
                 <StocksTable
                     setPickedStock={setPickedStock}
+                    userId={userId}
+                    token={token}
+                    setForceWatchListUpdate={setForceWatchListUpdate}
+                    forceWatchListUpdate={forceWatchListUpdate}
                 />
             </Grid2>
             <Grid2
@@ -54,6 +59,7 @@ export default function App() {
                             token={token}
                             userId={userId}
                             setPickedStock={setPickedStock}
+                            forceWatchListUpdate={forceWatchListUpdate}
                         />
                     </Grid2> : null
             }
