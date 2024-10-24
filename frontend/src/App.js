@@ -1,5 +1,6 @@
 import {
-    Grid2
+    Grid2,
+    Stack
 } from '@mui/material';
 import { useState } from 'react';
 
@@ -23,7 +24,7 @@ export default function App() {
             }}
         >
             <Grid2
-                size={6}
+                size={5}
             >
                 <StocksTable
                     setPickedStock={setPickedStock}
@@ -41,28 +42,30 @@ export default function App() {
                 />
             </Grid2>
             <Grid2
-                size={3}
+                size={4}
             >
-                <AuthCard
-                    setToken={setToken}
-                    token={token}
-                    setUserId={setUserId}
-                />
+                <Stack
+                    direction="column"
+                >
+                    <AuthCard
+                        setToken={setToken}
+                        token={token}
+                        setUserId={setUserId}
+                    />
+                    {
+                        token ?
+                            <WatchList
+                                token={token}
+                                userId={userId}
+                                setPickedStock={setPickedStock}
+                                forceWatchListUpdate={forceWatchListUpdate}
+                            /> : null
+                    }
+                </Stack>
+
             </Grid2>
 
-            {
-                token ?
-                    <Grid2
-                        size={12}
-                    >
-                        <WatchList
-                            token={token}
-                            userId={userId}
-                            setPickedStock={setPickedStock}
-                            forceWatchListUpdate={forceWatchListUpdate}
-                        />
-                    </Grid2> : null
-            }
+
         </Grid2>
     )
 }

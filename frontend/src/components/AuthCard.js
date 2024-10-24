@@ -63,8 +63,9 @@ export default function AuthCard(props) {
             elevation={4}
             sx={{
                 maxWidth: 400,
-                mx: 'auto',
-                p: 3
+                p: 3,
+                mb: 2,
+                width: "100%"
             }}
         >
             {

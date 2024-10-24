@@ -3,10 +3,12 @@ Welcome to the "real-time-stocks" app. I tried to keep the design and code as si
 
 The data comes courtesy of a package called [faker](https://www.npmjs.com/package/@faker-js/faker). Faker generates data that is convincingly real as opposed to obvious placeholder data.
 
-# Getting Started
+# Running the App
 1. Clone the repository.
 2. Install and setup docker.
 3. `docker-compose up`
+4. You can now visit `http://localhost:3000` in your browser.
+5. You can login using the username: `test` and the passwor: `test`
 
 # Backend
 Language: Typescript
@@ -84,3 +86,5 @@ Frameworks:
 - Testing. SInce most of this was database ops, unit tests would require mocking. I would like to add those to help improve the overall robustness of the app.
 - Adding a linter/formatter would be important as well.
 - Document API with OpenAPI spec.
+- Add filtering and search for the frontend stock component.
+- Overall polish and visual design of frontend could be improved dramatically.
