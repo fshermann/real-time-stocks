@@ -77,14 +77,25 @@ Frameworks:
 - MUI
 - axios
 
+## To Start the App Locally (Without Docker - YMMV based on your underlying OS)
+1. `cd frontend`
+2. `npm install`
+3. `npm run start`
+
+## To start with Docker
+1. `cd frontend`
+2. `docker build -t frontend-image .`
+3. `docker run -p 5000:5000 frontend-image`
+
 # Docs
 - [models.erd](docs/models.erc) - An ERD diagram as JSON. Viewable with the VS Code extension [here](https://marketplace.visualstudio.com/items?itemName=dineug.vuerd-vscode).
 
 # Things I Would do if I Had More Time
-- Real timestamps in the randomly generated data. This would require a pretty invovled algorithm to back date the records and make it look like a real stock price changing every minute or so.
+- Real timestamps in the randomly generated data going back some years. This would require a pretty invovled algorithm to back date the records and make it look like a real stock price changing every minute or so.
 - Fix the Sequelize model types. I had never used Sequelize with typescript and getting Typescript to understand the initialized sequelize model types was taking a little too long so I went with `any` types for those.
-- Testing. SInce most of this was database ops, unit tests would require mocking. I would like to add those to help improve the overall robustness of the app.
+- Testing. Since most of this was database ops, unit tests would require mocking. I would like to add those to help improve the overall robustness of the app.
 - Adding a linter/formatter would be important as well.
 - Document API with OpenAPI spec.
 - Add filtering and search for the frontend stock component.
 - Overall polish and visual design of frontend could be improved dramatically.
+- The overall frontend would be much more useful with actual graphs instead of just tables. I felt that it was beyond the scope of the app to implement that, but that feels like a the next logical step for frontend usability improvements.
