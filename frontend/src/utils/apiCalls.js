@@ -65,7 +65,7 @@ export async function deleteFromWatchList(userId, stockId, token) {
     return res.data;
 }
 
-export async function dgetWatchList(userId, token, page, recordsPerPage) {
+export async function getWatchList(userId, token, page, recordsPerPage) {
     const res = await axios.get(root + `/api/v1/users/${userId}/watchlist`, {
         headers: {
             Authorization: `Bearer ${token}`

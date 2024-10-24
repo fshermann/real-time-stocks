@@ -6,6 +6,7 @@ import { useState } from 'react';
 import StocksTable from './components/StocksTable';
 import StockHistory from './components/StockHistory';
 import AuthCard from './components/AuthCard';
+import WatchList from './components/WatchList';
 
 export default function App() {
     const [pickedStock, setPickedStock] = useState(1);
@@ -14,6 +15,7 @@ export default function App() {
 
     return (
         <Grid2
+            spacing={1}
             container
             sx={{
                 width: "100%"
@@ -42,6 +44,19 @@ export default function App() {
                     setUserId={setUserId}
                 />
             </Grid2>
+
+            {
+                token ?
+                    <Grid2
+                        size={12}
+                    >
+                        <WatchList
+                            token={token}
+                            userId={userId}
+                            setPickedStock={setPickedStock}
+                        />
+                    </Grid2> : null
+            }
         </Grid2>
     )
 }
