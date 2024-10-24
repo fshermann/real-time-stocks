@@ -12,7 +12,7 @@ COPY . .
 # Setup the environment variables to sane defaults
 ENV APP_PORT=5000
 ENV FAKE_STOCK_COUNT=100
-ENV FAKE_STOCK_PRICE_COUNT=100
+ENV FAKE_STOCK_PRICE_COUNT=1
 ENV JWT_SECRET='super-secret'
 
 EXPOSE 5000
