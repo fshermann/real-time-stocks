@@ -6,10 +6,11 @@ import {
     TableRow,
     Pagination,
     Card,
-    Typography
+    Typography,
+    Button
 } from "@mui/material";
-import { getWatchList } from "../utils/apiCalls";
-import { useEffect, useState } from "react";
+import { deleteFromWatchList, getWatchList } from "../utils/apiCalls";
+import { useCallback, useEffect, useState } from "react";
 
 export default function WatchList(props) {
     const {
@@ -24,17 +25,26 @@ export default function WatchList(props) {
 
     const stocksPerPage = 10;
 
-    useEffect(() => {
+    const getData = useCallback(() => {
         getWatchList(userId, token, page, stocksPerPage).then(res => {
             setWatchList(res.data);
             setPage(res.currentPage);
             setTotalPages(res.totalPages);
         });
-    }, [userId, token, page]);
+    }, []);
 
     const handlePageChange = (event, value) => {
         setPage(value);
     };
+
+    const handleDelete = async (item) => {
+        await deleteFromWatchList(userId, item.stockId, token);
+        getData();
+    }
+
+    useEffect(() => {
+        getData();
+    }, [getData, userId, token, page]);
 
     return (
         <Card
@@ -67,8 +77,16 @@ export default function WatchList(props) {
                                 }
                             }}
                         >
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.ticker}</TableCell>
+                            <TableCell>{item.Stock.name}</TableCell>
+                            <TableCell>{item.Stock.ticker}</TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleDelete(item)}
+                                >
+                                    Remove From Watch List
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
