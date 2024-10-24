@@ -116,7 +116,7 @@ export default function setupRoutes(router: Router, models: Models) {
         const { limit, offset } = paginate(req);
         const userId = parseInt(req.params.userId);
 
-        const watchList = await getWatchList(userId, limit, offset, models.WatchList);
+        const watchList = await getWatchList(userId, limit, offset, models.WatchList, models.Stock);
 
         if (watchList) {
             res.send(watchList);

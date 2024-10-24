@@ -1,11 +1,17 @@
-export default async function getWatchList(userId: number, limit: number, offset: number, WatchList: any) {
+export default async function getWatchList(userId: number, limit: number, offset: number, WatchList: any, Stock: any) {
     try {
         const watchList = await WatchList.findAndCountAll({
             limit,
             offset,
             where: {
                 userId
-            }
+            },
+            include: [
+                {
+                    model: Stock,
+                    required: true,
+                }
+            ]
         });
 
         return {
