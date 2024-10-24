@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { getStockPriceById } from '../utils/apiCalls';
+import { getStockById, getStockPriceById } from '../utils/apiCalls';
 
 export default function StockHistory(props) {
     const {
@@ -20,6 +20,7 @@ export default function StockHistory(props) {
     const [stockPrices, setStockPrices] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [name, setName] = useState('');
 
     const stocksPerPage = 10;
 
@@ -28,6 +29,10 @@ export default function StockHistory(props) {
             setStockPrices(res.data);
             setPage(res.currentPage);
             setTotalPages(res.totalPages);
+        });
+
+        getStockById(stockId).then(res => {
+            setName(res.data.name);
         });
     }, [stockId, page])
 
@@ -45,7 +50,7 @@ export default function StockHistory(props) {
             <Typography
                 variant='h5'
             >
-                Stock Price History
+                Stock Price History for {name}
             </Typography>
             <Table>
                 <TableHead>
