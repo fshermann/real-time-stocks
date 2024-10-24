@@ -22,34 +22,48 @@ const stablePriceFluctuation = (price: number) => {
 
 /**
  * This function runs on app start and loads the database with random stock prices.
+ * @param Stock - stock data model
+ * @param StockPrice - stock price data model
+ * @param recordCount - the count of record to create for each stock
+ * @param initialCreation - whether to start with a random number of the most recent value
  */
-export default async function generateStockPrices(Stock: any, StockPrice: any) {
+export default async function generateStockPrices(Stock: any, StockPrice: any, recordCount: number, initialCreation: boolean) {
     const stockPrices: any[] = []; // Create an array to hold stock data
-
-    if (!process.env.FAKE_STOCK_PRICE_COUNT) {
-        throw new Error('You must provide a FAKE_STOCK_PRICE_COUNT');
-    }
-
     const stocks = await Stock.findAll({ raw: true });
 
     // Not the most performant due to the nesting, but fine at reasonable record counts
-    stocks.forEach((stock: any) => {
-        const maxRecords: number = parseInt(process.env.FAKE_STOCK_PRICE_COUNT!);
-
+    for (const stock of stocks) {
         // get a realistic starting price
-        const min: number = 1;
-        const max: number = 300;
-        let startingPrice: number = +(Math.random() * (max - min) + min).toFixed(2);
+        let startingPrice: number;
+
+        if (initialCreation) {
+            const min: number = 20; // no penny stocks in my simulation!
+            const max: number = 300;
+            startingPrice = +(Math.random() * (max - min) + min).toFixed(2);
+        } else {
+            // get the most recent price as the point to mutate from
+            // this avoids massive price fluctuations over time
+            let existingPrice = await StockPrice.findOne({
+                where: {
+                    stockId: stock.id
+                },
+                order: [['id', 'DESC']],
+                logging: false,
+                raw: true
+            });
+            startingPrice = parseInt(existingPrice.price);
+        }
 
         let price = startingPrice;
-        for (let i = 0; i < maxRecords; i++) {
+        for (let i = 0; i < recordCount; i++) {
             price = stablePriceFluctuation(price);
+
             stockPrices.push({
                 stockId: stock.id,
                 price: price
             });
         }
-    })
+    }
 
     try {
         await StockPrice.bulkCreate(stockPrices, { logging: false });

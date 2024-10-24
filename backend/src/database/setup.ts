@@ -43,7 +43,18 @@ export default async function setupDatabase() {
 
     // Generate Random Stocks
     await generateStocks(Stock);
-    await generateStockPrices(Stock, StockPrice)
+
+    // Generate the initial random stock prices
+    // Note that this doesn't backdate timestamps
+    // This is functionally mitigated by just creating a single record on startup
+    if (!process.env.FAKE_STOCK_PRICE_COUNT) {
+        throw new Error('You must provide a FAKE_STOCK_PRICE_COUNT');
+    }
+    const recordCount: number = parseInt(process.env.FAKE_STOCK_PRICE_COUNT!);
+    await generateStockPrices(Stock, StockPrice, recordCount, true);
+
+    // Continue generating one new price per stock every 3 seconds
+    setInterval(() => generateStockPrices(Stock, StockPrice, 1, false), 3000);
 
     // Add an admin user
     await User.create({
