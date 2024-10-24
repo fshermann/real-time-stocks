@@ -9,7 +9,7 @@ import {
     Typography
 } from '@mui/material';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getStockById, getStockPriceById } from '../utils/apiCalls';
 
 export default function StockHistory(props) {
@@ -22,9 +22,10 @@ export default function StockHistory(props) {
     const [totalPages, setTotalPages] = useState(1);
     const [name, setName] = useState('');
 
+    const refreshInterval = 5000;
     const stocksPerPage = 10;
 
-    useEffect(() => {
+    const refreshData = useCallback(() => {
         getStockPriceById(stockId, page, stocksPerPage).then(res => {
             setStockPrices(res.data);
             setPage(res.currentPage);
@@ -34,7 +35,17 @@ export default function StockHistory(props) {
         getStockById(stockId).then(res => {
             setName(res.data.name);
         });
-    }, [stockId, page])
+    }, [page, stockId]);
+
+    useEffect(() => {
+        refreshData();
+
+        // setup polling
+        const intervalId = setInterval(refreshData, refreshInterval);
+
+        // clear interval when unmount happens
+        return () => clearInterval(intervalId);
+    }, [stockId, page, refreshData])
 
     const handlePageChange = (event, value) => {
         setPage(value);
@@ -56,6 +67,7 @@ export default function StockHistory(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Price</TableCell>
+                        <TableCell>Time</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -64,6 +76,7 @@ export default function StockHistory(props) {
                             key={item.id}
                         >
                             <TableCell>{item.price}</TableCell>
+                            <TableCell>{item.createdAt}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
