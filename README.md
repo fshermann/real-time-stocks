@@ -17,12 +17,15 @@ Frameworks:
 - Nodemon - Useful for local testing and auto reloading code on changes.
 
 ## To Start the App Locally (Without Docker - YMMV based on your underlying OS)
-1. `npm install`
-2. `export APP_PORT=8080`
-3. With Auto Reload: `npm run start:nodemon`
+1. `cd backend`
+2. `npm install`
+3. `export APP_PORT=8080`
+4. With Auto Reload: `npm run start:nodemon`
 
 ## To start with Docker
-TBD
+1. `cd backend`
+2. `docker build -t backend-image .`
+3. `docker run -p 5000:5000 backend-image`
 
 ## REST API Routes
 ### Health Check
