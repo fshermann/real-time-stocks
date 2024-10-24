@@ -70,7 +70,7 @@ export default function WatchList(props) {
                     {watchList.map((item) => (
                         <TableRow
                             key={item.id}
-                            onClick={() => setPickedStock(item.id)}
+                            onClick={() => setPickedStock(item.Stock.id)}
                             sx={{
                                 '&:hover': {
                                     backgroundColor: 'grey',
