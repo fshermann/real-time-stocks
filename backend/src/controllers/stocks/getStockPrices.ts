@@ -12,7 +12,8 @@ export default async function getStockPrices(stockId: number, limit: number, off
         offset,
         where: {
             stockId
-        }
+        },
+        order: [['id', 'DESC']] // get the most recent prices first
     });
 
     return {
