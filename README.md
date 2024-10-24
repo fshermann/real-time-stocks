@@ -8,7 +8,7 @@ The data comes courtesy of a package called [faker](https://www.npmjs.com/packag
 2. Install and setup docker.
 3. `docker-compose up`
 
-# Backend/
+# Backend
 Language: Typescript
 Frameworks: 
 - Express - The backend web application framework.
@@ -65,9 +65,14 @@ The ERD is below.
 - `StockPrices` - 
 - `UserWatchlists` - a junction table that allows us to query a user's watch list
 
-# Frontend/
+# Frontend
+Language: Javascript
+Frameworks: 
+- React
+- MUI
+- axios
 
-# Docs/
+# Docs
 - [models.erd](docs/models.erc) - An ERD diagram as JSON. Viewable with the VS Code extension [here](https://marketplace.visualstudio.com/items?itemName=dineug.vuerd-vscode).
 
 # Things I Would do if I Had More Time
